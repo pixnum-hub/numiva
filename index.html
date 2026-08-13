@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Numiva — Chaldean · Pythagorean · Vedic · Kabbalah</title>
+<meta name="description" content="A full name — birth date optional — read through four numerology traditions: Pythagorean, Chaldean, Vedic and Kabbalah.">
+<meta name="theme-color" content="#0b0e1a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="57x57" href="icons/icon-57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="icons/icon-60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="icons/icon-72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="icons/icon-76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="icons/icon-114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Numiva">
+<meta name="msapplication-config" content="browserconfig.xml">
+<meta name="msapplication-TileColor" content="#0b0e1a">
+<meta name="msapplication-TileImage" content="icons/mstile-150.png">
+<style>
+:root{--r:16px}
+[data-theme="dark"]{--bg:#0b0e1a;--surface:#12162a;--surface2:#181d38;--text:#e8e3d8;--muted:#8892b0;--gold:#c9a227;--violet:#8a6fd1;--border:#242a4a;--ring:2px}
+[data-theme="light"]{--bg:#f7f4ec;--surface:#ffffff;--surface2:#efe9da;--text:#241f1a;--muted:#6b6558;--gold:#a9790a;--violet:#6b4fa0;--border:#ded5c0;--ring:2px}
+[data-theme="oled"]{--bg:#000000;--surface:#070707;--surface2:#0d0d0d;--text:#ededed;--muted:#8a8a8a;--gold:#d4af37;--violet:#9a7ee0;--border:#1c1c1c;--ring:2px}
+[data-theme="hc"]{--bg:#000000;--surface:#000000;--surface2:#000000;--text:#ffffff;--muted:#ffffff;--gold:#ffe500;--violet:#00e5ff;--border:#ffffff;--ring:3px}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition:background .25s,color .25s}
+h1,h2,.wordmark,.bignum{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:700}
+a{color:var(--gold)}
+.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.wordmark{font-size:1.15rem;letter-spacing:.12em;color:var(--gold)}
+.themes{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.themes button{background:var(--surface);color:var(--text);border:var(--ring) solid var(--border);border-radius:20px;padding:6px 12px;font-size:.72rem;letter-spacing:.05em;cursor:pointer}
+.themes button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold)}
+#installBtn{border-color:var(--gold);color:var(--gold)}
+#updateToast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--surface);border:1px solid var(--gold);color:var(--text);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;font-size:.82rem;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:50}
+#updateToast button{background:var(--gold);color:var(--bg);border:none;border-radius:8px;padding:8px 12px;font-size:.78rem;font-weight:600;cursor:pointer}
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:28px 18px 40px}
+.hero{text-align:center;margin-bottom:26px}
+.hero p{color:var(--muted);margin:0;font-size:.95rem}
+form{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;margin-top:22px}
+label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:6px}
+input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:inherit;font-size:1rem}
+input:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btnrow{display:flex;gap:10px}
+.calc-btn{flex:1;background:var(--gold);color:var(--bg);border:none;border-radius:10px;padding:13px;font-size:1rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
+.calc-btn:active{opacity:.85}
+.reset-btn{flex:1;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:1rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
+.reset-btn:active{opacity:.7}
+.hidden{display:none!important}
+.linklike{background:none;border:none;color:var(--violet);font-size:.82rem;cursor:pointer;padding:2px 0;text-align:left;text-decoration:underline}
+#personB{display:flex;flex-direction:column;gap:14px;margin-top:2px;padding-top:14px;border-top:1px dashed var(--border)}
+#history{max-width:760px;margin:18px auto 0;padding:0 18px}
+.histhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.histlabel{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:16px;padding:6px 12px;font-size:.78rem;cursor:pointer}
+.copy-btn{align-self:flex-start;background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:8px;padding:9px 16px;font-size:.82rem;font-weight:600;cursor:pointer}
+.copy-msg{font-size:.78rem;color:var(--violet);margin-left:8px}
+.compatWrap p.note{margin-bottom:14px}
+.compatRow{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--border);padding:12px 0}
+.compatRow:last-child{border-bottom:none}
+.compatSys{font-size:.92rem}
+.compatNums{font-size:.78rem;color:var(--muted);display:block;margin-top:2px}
+.compatBadge{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:12px;border:1px solid var(--violet);color:var(--violet);white-space:nowrap}
+.err{color:#ff6b6b;font-size:.82rem;min-height:1em}
+#results{display:none;margin-top:36px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+.tabs button{background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:8px 14px;font-size:.78rem;letter-spacing:.04em;cursor:pointer}
+.tabs button[aria-selected="true"]{border-color:var(--violet);color:var(--text);background:var(--surface2)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:grid;gap:22px;grid-template-columns:1fr}
+.sysname{font-size:1.2rem;color:var(--gold);margin:0 0 4px}
+.note{color:var(--muted);font-size:.85rem;margin:0 0 16px;line-height:1.5}
+.wheelwrap{display:flex;justify-content:center}
+svg#wheel{width:min(280px,80vw);height:min(280px,80vw)}
+.node circle{fill:var(--surface2);stroke:var(--border);stroke-width:1.4}
+.node text{fill:var(--muted);font-size:6px;text-anchor:middle;font-family:inherit}
+.node.primary circle{fill:var(--gold);stroke:var(--gold)}
+.node.primary text{fill:var(--bg);font-weight:600}
+.node.secondary circle{fill:var(--surface);stroke:var(--violet);stroke-width:2}
+.node.secondary text{fill:var(--violet)}
+#centerNum{font-size:22px;fill:var(--text);text-anchor:middle;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.linePrimary{stroke:var(--gold);stroke-width:.8;opacity:.7}
+.lineSecondary{stroke:var(--violet);stroke-width:.6;stroke-dasharray:2 2;opacity:.6}
+.readout{display:flex;flex-direction:column;gap:14px}
+.numrow{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--border);padding-bottom:10px}
+.numrow .bignum{font-size:2rem;color:var(--gold);min-width:44px}
+.numrow .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block}
+.compoundtag{font-size:.7rem;color:var(--violet);display:block;margin-top:2px}
+.meaning{line-height:1.6;font-size:.94rem}
+.meaninglabel{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:4px}
+#compoundSection{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)}
+@media(min-width:680px){.panel{grid-template-columns:280px 1fr;align-items:start}}
+footer{margin-top:auto;border-top:1px solid var(--border);padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px}
+footer p{margin:0;font-size:.8rem;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="wordmark">Numiva</span>
+  <div class="themes" id="themes">
+    <button data-t="light" aria-pressed="false">Light</button>
+    <button data-t="dark" aria-pressed="true">Dark</button>
+    <button data-t="oled" aria-pressed="false">OLED</button>
+    <button data-t="hc" aria-pressed="false">HC</button>
+    <button id="installBtn" class="hidden" type="button">Install app</button>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <p>One name — birth date optional — read through four traditions.</p>
+    <form id="form">
+      <div>
+        <label for="name">Full name</label>
+        <input id="name" type="text" placeholder="As given at birth" autocomplete="off">
+      </div>
+      <div>
+        <label for="dob">Date of birth <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input id="dob" type="date">
+      </div>
+      <button type="button" id="compareToggle" class="linklike">+ Compare with someone else</button>
+      <div id="personB" class="hidden">
+        <div>
+          <label for="name2">Second name</label>
+          <input id="name2" type="text" placeholder="Their full name" autocomplete="off">
+        </div>
+        <div>
+          <label for="dob2">Their date of birth <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="dob2" type="date">
+        </div>
+      </div>
+      <p class="err" id="err"></p>
+      <div class="btnrow">
+        <button class="calc-btn" type="button" id="calcBtn">Calculate</button>
+        <button class="reset-btn" type="button" id="resetBtn">Reset</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="history" class="hidden">
+    <div class="histhead"><span class="histlabel">Recent</span><button id="clearHist" class="linklike">Clear</button></div>
+    <div class="chips" id="histChips"></div>
+  </section>
+
+  <section id="results">
+    <div class="tabs" id="tabs">
+      <button data-k="pyth" aria-selected="true">Pythagorean</button>
+      <button data-k="chald" aria-selected="false">Chaldean</button>
+      <button data-k="vedic" aria-selected="false">Vedic</button>
+      <button data-k="kab" aria-selected="false">Kabbalah</button>
+      <button data-k="compat" aria-selected="false" id="compatTab" class="hidden">Compatibility</button>
+    </div>
+    <div class="panel">
+      <div class="wheelwrap" id="wheelWrap">
+        <svg id="wheel" viewBox="0 0 100 100">
+          <line id="lp" class="linePrimary" x1="50" y1="50" x2="50" y2="50"/>
+          <line id="ls" class="lineSecondary" x1="50" y1="50" x2="50" y2="50"/>
+          <g id="wheelNodes"></g>
+          <text id="centerNum" x="50" y="57">–</text>
+        </svg>
+      </div>
+      <div class="readout" id="readout">
+        <h2 class="sysname" id="sysname">Pythagorean</h2>
+        <p class="note" id="sysnote"></p>
+        <div class="numrow"><span class="bignum" id="primaryNum">–</span><span><span class="label" id="primaryLabel"></span><span class="compoundtag" id="primaryCompoundTag"></span></span></div>
+        <div class="numrow"><span class="bignum" id="secondaryNum">–</span><span><span class="label" id="secondaryLabel"></span><span class="compoundtag" id="secondaryCompoundTag"></span></span></div>
+        <span class="meaninglabel">Single number meaning</span>
+        <p class="meaning" id="meaning">Enter your name above to begin — add a birth date too for the Life Path, Destiny and Vedic readings.</p>
+        <div id="compoundSection" class="hidden">
+          <span class="meaninglabel" id="compoundHeading">Compound number meaning</span>
+          <p class="meaning" id="compoundMeaningText"></p>
+        </div>
+        <button class="copy-btn" type="button" id="copyBtn">Copy summary</button><span class="copy-msg" id="copyMsg"></span>
+      </div>
+      <div class="compatWrap hidden" id="compatWrap">
+        <h2 class="sysname">Compatibility</h2>
+        <p class="note" id="compatNote"></p>
+        <div id="compatRows"></div>
+        <button class="copy-btn" type="button" id="copyBtnCompat">Copy summary</button><span class="copy-msg" id="copyMsgCompat"></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; Manik Roy <span id="year"></span>. All Rights Reserved.</p>
+</footer>
+
+<div id="updateToast" class="hidden">
+  <span>A new version of Numiva is ready.</span>
+  <button id="updateBtn" type="button">Refresh</button>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+/* ---------- theme ---------- */
+const root = document.documentElement;
+let savedTheme = 'dark';
+try{ savedTheme = localStorage.getItem('numTheme') || 'dark'; }catch(e){ console.error('Numiva: localStorage unavailable', e); }
+root.setAttribute('data-theme', savedTheme);
+document.querySelectorAll('#themes button[data-t]').forEach(b=>{
+  b.setAttribute('aria-pressed', b.dataset.t===savedTheme ? 'true':'false');
+  b.addEventListener('click', ()=>{
+    root.setAttribute('data-theme', b.dataset.t);
+    try{ localStorage.setItem('numTheme', b.dataset.t); }catch(e){ console.error('Numiva: could not save theme', e); }
+    document.querySelectorAll('#themes button[data-t]').forEach(x=>x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+  });
+});
+/* ---------- letter charts ---------- */
+const PYTH = {a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8};
+const CHALD = {a:1,i:1,j:1,q:1,y:1,b:2,k:2,r:2,c:3,g:3,l:3,s:3,d:4,m:4,t:4,e:5,h:5,n:5,x:5,u:6,v:6,w:6,o:7,z:7,f:8,p:8};
+const KAB = {a:1,b:2,c:3,d:4,e:5,f:8,g:3,h:5,i:1,j:1,k:2,l:3,m:4,n:5,o:7,p:8,q:1,r:2,s:3,t:4,u:6,v:6,w:6,x:6,y:1,z:7};
+const MEANS = {1:"Leadership, independence and a pioneering drive to go first.",2:"Diplomacy, sensitivity and strength through partnership.",
+3:"Creative expression, optimism and communication.",4:"Discipline, structure and a builder's patience.",
+5:"Freedom, change and an appetite for adventure.",6:"Responsibility, harmony and care for others.",
+7:"Introspection, analysis and a seeker's mind.",8:"Ambition, authority and mastery of the material world.",
+9:"Compassion, completion and humanitarian breadth.",11:"Heightened intuition and spiritual insight — a Master Number.",
+22:"The Master Builder — vision turned into lasting form.",33:"The Master Teacher — wisdom offered in service of others."};
+const COMPOUND = {
+10:"A cycle completing — gains and losses arrive in turn, favor is not permanent.",
+11:"A test of intuition — proceed carefully, hidden pitfalls disguised as opportunity.",
+12:"Sacrifice for another's benefit — mental strain unless clear boundaries are set.",
+13:"Upheaval that forces transformation — demolition before rebuilding, not misfortune.",
+14:"Restless movement and risk — adaptable but prone to excess or impulse.",
+15:"Magnetic charm and domestic devotion — an affinity for the unseen.",
+16:"The shattered tower — sudden disruption humbles unchecked ego or false plans.",
+17:"A star of quiet renewal — setbacks give way to earned spiritual reward.",
+18:"Conflict between ambition and conscience — power struggles within and without.",
+19:"The sun's number — success and fortune that reward sustained effort.",
+20:"An awakening call — judgment, partnership, readiness to act on insight.",
+21:"The crown after struggle — recognition and advancement following persistence.",
+22:"Outsized vision, outsized risk — great building power that demands discipline.",
+23:"Royal aid arrives — protection and support from unexpected, powerful quarters.",
+24:"Fortunate partnership — love and gain through trusted alliances.",
+25:"Wisdom earned through direct experience — strength built by trial.",
+26:"A caution on partnerships — associations here can quietly undermine progress.",
+27:"Command earned — authority rewards those who lead with restraint.",
+28:"Effort undone by oversight — secure agreements, or good work slips away.",
+29:"A trial kept private — emotional depth and hidden turmoil test resolve.",
+30:"Reflective depth — philosophical, self-contained success through contemplation.",
+31:"Solitary achievement — self-reliance carries this further than partnership would.",
+32:"Guided leadership — cooperation and quiet faith bring steady influence.",
+33:"Devoted responsibility — protective service carried out for others' sake.",
+34:"Growth through change — wisdom arrives through lived adjustment.",
+35:"Resourceful adaptability — steady effort converts change into advantage.",
+36:"Duty reconciled with love — harmony restored through patient compromise.",
+37:"Fortunate union — contracts and partnerships here tend to prosper.",
+38:"Mixed fortune — cycles of gain and setback; resilience matters most.",
+39:"Service to others — support given generously, sometimes at personal cost.",
+40:"Obstacles and delay — doubt tests resolve before progress resumes.",
+41:"Independent achievement — self-made success through original effort.",
+42:"Cooperative gain — others' support meaningfully advances ambition.",
+43:"Undermined plans — upheaval within one's own circle calls for caution.",
+44:"Material power tempered by ethics — strength that must be used responsibly.",
+45:"Stability through diligence — favorable ground for steady enterprise.",
+46:"Betrayal risk from within — obstacles often arise from trusted circles.",
+47:"Steady achievement — patient guidance and support yield reliable results.",
+48:"Sacrifice for collective benefit — service on a wider scale.",
+49:"Inner reflection before breakthrough — insight precedes the next opening.",
+50:"Applied wisdom — philosophical strength turned to practical advantage.",
+51:"Decisive leadership — change is embraced rather than resisted.",
+52:"Trial and adaptation — resolve strengthened by willingness to adjust."
+};
+function compoundMeaning(n){
+  if(COMPOUND[n]) return COMPOUND[n];
+  const folded = ((n-10)%43+43)%43+10;
+  return COMPOUND[folded] ? COMPOUND[folded]+" (a higher-octave echo of "+folded+")" : "A blended vibration that settles into its reduced root number.";
+}
+const SYS = {
+  pyth:{name:"Pythagorean",note:"Western system built from the Life Path of your birth date and the Expression of your full name, letters A–I mapped 1–9."},
+  chald:{name:"Chaldean",note:"Ancient Babylonian system weighing sound vibration in the name; nine is sacred and never assigned to a letter."},
+  vedic:{name:"Vedic",note:"Sidereal Indian system centred purely on the birth date: Moolank (day) and Bhagyank (full date), always reduced to a single digit."},
+  kab:{name:"Kabbalah",note:"Hebrew-letter gematria mapped onto the Latin alphabet, read entirely through the vibration of the name."}
+};
+/* ---------- math ---------- */
+function reduce(n, keepMaster){
+  while(n>9){
+    if(keepMaster && (n===11||n===22||n===33)) return n;
+    n = String(n).split('').reduce((a,d)=>a+ +d,0);
+  }
+  return n;
+}
+function toDigit(n){ return reduce(n,false); }
+function letterSum(name, table){
+  let sum=0;
+  for(const ch of name.toLowerCase()) if(table[ch]) sum+=table[ch];
+  return sum;
+}
+function dobParts(dob){ const [y,m,d]=dob.split('-').map(Number); return {y,m,d}; }
+function rawDigitSum(dob){
+  const digits = dob.replace(/-/g,'');
+  return [...digits].reduce((a,c)=>a+ +c,0);
+}
+function withRoot(compound, keepMaster){ return { compound, root: reduce(compound, keepMaster) }; }
+/* ---------- wheel ---------- */
+const nodesG = document.getElementById('wheelNodes');
+let coords = {};
+(function buildWheel(){
+  let html='';
+  for(let i=1;i<=9;i++){
+    const ang=(-90+(i-1)*40)*Math.PI/180;
+    const x=+(50+38*Math.cos(ang)).toFixed(2), y=+(50+38*Math.sin(ang)).toFixed(2);
+    coords[i]={x,y};
+    html+=`<g class="node" data-n="${i}" transform="translate(${x},${y})"><circle r="6"></circle><text y="2.2">${i}</text></g>`;
+  }
+  nodesG.innerHTML = html;
+})();
+function highlightWheel(primaryVal, secondaryVal){
+  document.querySelectorAll('#wheelNodes .node').forEach(n=>n.classList.remove('primary','secondary'));
+  const pd = primaryVal!=null ? toDigit(primaryVal) : null;
+  const sd = secondaryVal!=null ? toDigit(secondaryVal) : null;
+  const lp = document.getElementById('lp');
+  const ls = document.getElementById('ls');
+
+  if(pd!=null){
+    const pNode = nodesG.querySelector(`[data-n="${pd}"]`);
+    if(pNode) pNode.classList.add('primary');
+    lp.style.display='';
+    lp.setAttribute('x2', coords[pd].x); lp.setAttribute('y2', coords[pd].y);
+  }else{
+    lp.style.display='none';
+  }
+
+  // Only mark/draw the secondary node+line when it's a *different* node than
+  // the primary and actually has a value — otherwise the secondary style
+  // (later in the stylesheet) silently overrides the primary's gold styling
+  // on the shared node, and a redundant dashed line gets drawn on top of the
+  // solid one. This always applied to the Kabbalah tab, where primary and
+  // secondary are the same number by design.
+  if(sd!=null && sd!==pd){
+    const sNode = nodesG.querySelector(`[data-n="${sd}"]`);
+    if(sNode) sNode.classList.add('secondary');
+    ls.style.display='';
+    ls.setAttribute('x2', coords[sd].x); ls.setAttribute('y2', coords[sd].y);
+  }else{
+    ls.style.display='none';
+  }
+
+  document.getElementById('centerNum').textContent = primaryVal!=null ? primaryVal : (secondaryVal!=null ? secondaryVal : '–');
+}
+/* ---------- calculate ---------- */
+let results = null, resultsB = null, comparing = false, currentTab = 'pyth';
+function computeAll(name, dob){
+  const hasDob = !!dob;
+  const dateCompound = hasDob ? rawDigitSum(dob) : null;
+  const lp = hasDob ? withRoot(dateCompound, true) : null;
+  const ex = withRoot(letterSum(name, PYTH), true);
+  const cn = withRoot(letterSum(name, CHALD), true);
+  const cd = hasDob ? withRoot(dateCompound, true) : null;
+  const moolank = hasDob ? withRoot(dobParts(dob).d, false) : null;
+  const bhagyank = hasDob ? withRoot(dateCompound, false) : null;
+  const kn = withRoot(letterSum(name, KAB), false);
+  return {
+    pyth:{primary:lp ? lp.root : null, primaryCompound:lp ? lp.compound : null, primaryLabel:'Life Path', secondary:ex.root, secondaryCompound:ex.compound, secondaryLabel:'Expression'},
+    chald:{primary:cn.root, primaryCompound:cn.compound, primaryLabel:'Name Number', secondary:cd ? cd.root : null, secondaryCompound:cd ? cd.compound : null, secondaryLabel:'Destiny Number'},
+    vedic:{primary:moolank ? moolank.root : null, primaryCompound:moolank ? moolank.compound : null, primaryLabel:'Moolank (Root)', secondary:bhagyank ? bhagyank.root : null, secondaryCompound:bhagyank ? bhagyank.compound : null, secondaryLabel:'Bhagyank (Destiny)'},
+    kab:{primary:kn.root, primaryCompound:kn.compound, primaryLabel:'Name Number', secondary:kn.root, secondaryCompound:kn.compound, secondaryLabel:'Name Number'}
+  };
+}
+const GROUPS=[[1,5,7],[2,4,8],[3,6,9]];
+function sameGroup(a,b){ return GROUPS.some(g=>g.includes(a)&&g.includes(b)); }
+function compatNote(a,b){
+  const da=toDigit(a), db=toDigit(b);
+  if(da===db) return {label:'Mirror', text:'Same core number — instant recognition, but watch for competing over the same ground.'};
+  if(sameGroup(da,db)) return {label:'Aligned', text:'These numbers share a natural rhythm and tend to move through life the same way.'};
+  if(Math.abs(da-db)===1) return {label:'Complementary', text:'Neighbouring numbers — enough friction to stay interesting, enough overlap to understand each other.'};
+  return {label:'Contrast', text:'Different rhythms — real connection here takes conscious effort rather than automatic ease.'};
+}
+function doCalculate(){
+  const err = document.getElementById('err');
+  try{
+    const name = document.getElementById('name').value.trim();
+    const dob = document.getElementById('dob').value; // optional
+    if(!name || !/[a-zA-Z]/.test(name)){ err.textContent='Please enter a name.'; return; }
+    comparing = !document.getElementById('personB').classList.contains('hidden');
+    let name2='', dob2='';
+    if(comparing){
+      name2 = document.getElementById('name2').value.trim();
+      dob2 = document.getElementById('dob2').value; // optional
+      if(!name2 || !/[a-zA-Z]/.test(name2)){ err.textContent='Please enter the second name.'; return; }
+    }
+    err.textContent='';
+    results = computeAll(name, dob);
+    resultsB = comparing ? computeAll(name2, dob2) : null;
+    document.getElementById('compatTab').classList.toggle('hidden', !comparing);
+    saveHistory(name, dob);
+    document.getElementById('results').style.display='block';
+    renderTab(comparing ? currentTab : (currentTab==='compat' ? 'pyth' : currentTab));
+    document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+  }catch(ex){
+    err.textContent='Something went wrong — please check your inputs and try again.';
+    console.error(ex);
+  }
+}
+function doReset(){
+  document.getElementById('name').value='';
+  document.getElementById('dob').value='';
+  document.getElementById('name2').value='';
+  document.getElementById('dob2').value='';
+  document.getElementById('personB').classList.add('hidden');
+  document.getElementById('compareToggle').textContent='+ Compare with someone else';
+  document.getElementById('compatTab').classList.add('hidden');
+  document.getElementById('err').textContent='';
+  document.getElementById('results').style.display='none';
+  results = null; resultsB = null; comparing = false;
+  currentTab = 'pyth';
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.k==='pyth' ? 'true':'false'));
+  document.getElementById('name').focus();
+}
+document.getElementById('calcBtn').addEventListener('click', doCalculate);
+document.getElementById('resetBtn').addEventListener('click', doReset);
+document.getElementById('compareToggle').addEventListener('click', ()=>{
+  const pb = document.getElementById('personB');
+  pb.classList.toggle('hidden');
+  document.getElementById('compareToggle').textContent = pb.classList.contains('hidden') ? '+ Compare with someone else' : '− Remove comparison';
+});
+document.getElementById('form').addEventListener('submit', e=> e.preventDefault());
+document.getElementById('form').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doCalculate(); } });
+/* ---------- history ---------- */
+function loadHistory(){ try{ return JSON.parse(localStorage.getItem('numHistory'))||[]; }catch(e){ return []; } }
+function saveHistory(name, dob){
+  let h = loadHistory().filter(e=>!(e.name===name && e.dob===dob));
+  h.unshift({name, dob});
+  h = h.slice(0,8);
+  try{ localStorage.setItem('numHistory', JSON.stringify(h)); }catch(e){ console.error('Numiva: could not save history', e); }
+  renderHistory();
+}
+function fmtDate(dob){ if(!dob) return 'no birth date'; const [y,m,d]=dob.split('-'); return `${m}/${d}/${y}`; }
+function renderHistory(){
+  const h = loadHistory();
+  const sec = document.getElementById('history');
+  sec.classList.toggle('hidden', h.length===0);
+  const wrap = document.getElementById('histChips');
+  // Build chips with the DOM API (not innerHTML) so a name containing
+  // characters like < > & can never be parsed as markup/script. Previously
+  // the name was interpolated straight into an innerHTML template, which
+  // was an XSS hole: a saved name of e.g. "<img src=x onerror=alert(1)>"
+  // would execute whenever the history list re-rendered.
+  wrap.innerHTML = '';
+  h.forEach(e=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip';
+    btn.textContent = `${e.name} — ${fmtDate(e.dob)}`;
+    btn.addEventListener('click', ()=>{
+      document.getElementById('name').value = e.name;
+      document.getElementById('dob').value = e.dob;
+      doCalculate();
+    });
+    wrap.appendChild(btn);
+  });
+}
+document.getElementById('clearHist').addEventListener('click', ()=>{
+  try{ localStorage.removeItem('numHistory'); }catch(e){ console.error('Numiva: could not clear history', e); }
+  renderHistory();
+});
+renderHistory();
+/* ---------- copy summary ---------- */
+function copyText(text, msgEl){
+  const done = ()=>{ msgEl.textContent='Copied!'; setTimeout(()=>msgEl.textContent='',2000); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+  } else fallbackCopy(text,done);
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ console.error(e); }
+  document.body.removeChild(ta);
+}
+function buildSummary(){
+  const name = document.getElementById('name').value.trim();
+  let out = `Numiva — ${name}\n`;
+  for(const k of ['pyth','chald','vedic','kab']){
+    const r = results[k], s = SYS[k];
+    const primaryStr = r.primary==null
+      ? `${r.primaryLabel} — add a birth date to see this`
+      : `${r.primaryLabel} ${r.primary}${(r.primaryCompound>9 && r.primaryCompound!==r.primary) ? ` (compound ${r.primaryCompound})` : ''}`;
+    const secondaryStr = r.secondary==null
+      ? `${r.secondaryLabel} — add a birth date to see this`
+      : `${r.secondaryLabel} ${r.secondary}`;
+    out += `\n${s.name}: ${primaryStr}, ${secondaryStr}`;
+  }
+  return out;
+}
+function buildCompatSummary(){
+  const nameA = document.getElementById('name').value.trim();
+  const nameB = document.getElementById('name2').value.trim();
+  let out = `Compatibility — ${nameA} & ${nameB}\n`;
+  for(const k of ['pyth','chald','vedic','kab']){
+    const a=results[k].primary, b=resultsB[k].primary;
+    if(a==null || b==null){
+      out += `\n${SYS[k].name}: requires a birth date for both people`;
+      continue;
+    }
+    const c=compatNote(a,b);
+    out += `\n${SYS[k].name}: ${a} vs ${b} — ${c.label}`;
+  }
+  return out;
+}
+document.getElementById('copyBtn').addEventListener('click', ()=>{ if(results) copyText(buildSummary(), document.getElementById('copyMsg')); });
+document.getElementById('copyBtnCompat').addEventListener('click', ()=>{ if(results && resultsB) copyText(buildCompatSummary(), document.getElementById('copyMsgCompat')); });
+function renderTab(key){
+  currentTab = key;
+  if(key==='compat'){
+    document.getElementById('wheelWrap').classList.add('hidden');
+    document.getElementById('readout').classList.add('hidden');
+    document.getElementById('compatWrap').classList.remove('hidden');
+    const nameA = document.getElementById('name').value.trim();
+    const nameB = document.getElementById('name2').value.trim();
+    document.getElementById('compatNote').textContent = `How ${nameA} and ${nameB} line up across all four systems.`;
+    document.getElementById('compatRows').innerHTML = ['pyth','chald','vedic','kab'].map(k=>{
+      const a=results[k].primary, b=resultsB[k].primary;
+      if(a==null || b==null){
+        return `<div class="compatRow"><span class="compatSys">${SYS[k].name}<span class="compatNums">Requires a birth date for both people</span></span><span class="compatBadge">N/A</span></div>`;
+      }
+      const c=compatNote(a,b);
+      return `<div class="compatRow"><span class="compatSys">${SYS[k].name}<span class="compatNums">${a} vs ${b} — ${c.text}</span></span><span class="compatBadge">${c.label}</span></div>`;
+    }).join('');
+  }else{
+    document.getElementById('compatWrap').classList.add('hidden');
+    document.getElementById('wheelWrap').classList.remove('hidden');
+    document.getElementById('readout').classList.remove('hidden');
+    const r = results[key], s = SYS[key];
+    document.getElementById('sysname').textContent = s.name;
+    document.getElementById('sysnote').textContent = s.note;
+    document.getElementById('primaryNum').textContent = r.primary!=null ? r.primary : '–';
+    document.getElementById('primaryLabel').textContent = r.primaryLabel;
+    document.getElementById('secondaryNum').textContent = r.secondary!=null ? r.secondary : '–';
+    document.getElementById('secondaryLabel').textContent = r.secondaryLabel;
+    const pTag = document.getElementById('primaryCompoundTag'), sTag = document.getElementById('secondaryCompoundTag');
+    pTag.textContent = r.primary==null ? 'Add a birth date above to reveal this'
+      : (r.primaryCompound>9 && r.primaryCompound!==r.primary) ? `compound ${r.primaryCompound}` : '';
+    sTag.textContent = r.secondary==null ? 'Add a birth date above to reveal this'
+      : (r.secondaryCompound>9 && r.secondaryCompound!==r.secondary) ? `compound ${r.secondaryCompound}` : '';
+    document.getElementById('meaning').textContent = r.primary==null
+      ? `${r.primaryLabel} is calculated from your date of birth — add one above to see it.`
+      : (MEANS[r.primary] || MEANS[toDigit(r.primary)]);
+    const compSec = document.getElementById('compoundSection');
+    if(r.primary!=null && r.primaryCompound>9 && r.primaryCompound!==r.primary){
+      compSec.classList.remove('hidden');
+      document.getElementById('compoundHeading').textContent = `Compound number meaning — ${r.primaryCompound}`;
+      document.getElementById('compoundMeaningText').textContent = compoundMeaning(r.primaryCompound);
+    }else{
+      compSec.classList.add('hidden');
+    }
+    highlightWheel(r.primary, r.secondary);
+  }
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.k===key ? 'true':'false'));
+}
+document.querySelectorAll('#tabs button').forEach(b=>{
+  b.addEventListener('click', ()=>{ if(results) renderTab(b.dataset.k); });
+});
+
+/* ================================================================
+   PWA layer — written from scratch
+   ================================================================ */
+(function pwa(){
+  const SW_URL = 'sw.js';
+  const installBtn = document.getElementById('installBtn');
+  const updateToast = document.getElementById('updateToast');
+  const updateBtn = document.getElementById('updateBtn');
+  let deferredPrompt = null;
+  let waitingWorker = null;
+
+  // --- Install prompt (Android/Chrome/Edge) ---
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    installBtn.classList.remove('hidden');
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    installBtn.classList.add('hidden');
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.classList.add('hidden');
+    deferredPrompt = null;
+  });
+
+  // --- Service worker registration + update flow ---
+  if (!('serviceWorker' in navigator)) return;
+
+  // The Claude chat preview (claudeusercontent.com) only serves this single
+  // HTML file — it doesn't host sw.js, manifest.json, or icons/ as sibling
+  // files, so registration would always 404 there. That's expected and
+  // harmless (the rest of the app works fine without it), but it's noisy in
+  // the console, so skip the attempt entirely in that context. On a real
+  // deployment, where all the PWA files sit together, this check is a no-op
+  // and registration proceeds normally.
+  if (location.hostname.endsWith('claudeusercontent.com')) return;
+
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(SW_URL)
+      .then((registration) => {
+        // A worker may already be waiting from a previous visit.
+        if (registration.waiting) {
+          waitingWorker = registration.waiting;
+          showUpdateToast();
+        }
+        registration.addEventListener('updatefound', () => {
+          const incoming = registration.installing;
+          if (!incoming) return;
+          incoming.addEventListener('statechange', () => {
+            if (incoming.state === 'installed' && navigator.serviceWorker.controller) {
+              waitingWorker = incoming;
+              showUpdateToast();
+            }
+          });
+        });
+      })
+      .catch((err) => {
+        // Non-fatal: the app works without a service worker, it just loses
+        // offline caching and the install-update-toast flow. Log quietly
+        // rather than as an error so it doesn't look like the app is broken.
+        console.info('Numiva: service worker unavailable (offline support disabled)', err);
+      });
+  });
+
+  function showUpdateToast(){ updateToast.classList.remove('hidden'); }
+
+  updateBtn.addEventListener('click', () => {
+    if (!waitingWorker) return;
+    waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+  });
+
+  let refreshed = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshed) return;
+    refreshed = true;
+    window.location.reload();
+  });
+})();
+</script>
+</body>
+</html>

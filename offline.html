@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Numiva — Offline</title>
+<meta name="theme-color" content="#0b0e1a">
+<style>
+:root{--r:16px}
+[data-theme="dark"]{--bg:#0b0e1a;--surface:#12162a;--text:#e8e3d8;--muted:#8892b0;--gold:#c9a227;--border:#242a4a}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:center;padding:24px}
+.card{max-width:420px}
+h1{color:var(--gold);font-size:1.6rem;margin:0 0 10px;letter-spacing:.03em}
+p{color:var(--muted);line-height:1.6;margin:0 0 22px}
+button{background:var(--gold);color:var(--bg);border:none;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>You're offline</h1>
+    <p>Numiva can't reach the network right now. If you've opened the app before, your last calculation may still be available — try going back. Otherwise, reconnect and reload.</p>
+    <button type="button" onclick="location.reload()">Try again</button>
+  </div>
+</body>
+</html>
